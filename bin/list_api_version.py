@@ -19,7 +19,10 @@ yaml_stream = requests.get(API_URL).text
 yaml_dict = benedict.from_yaml(yaml_stream)
 
 my_title = yaml_dict['info.title']
-print('API_Name|{}'.format(my_title))
+print('APIName|{}'.format(my_title))
 
 my_version = yaml_dict['info.version']
-print('API_Version|{}'.format(my_version))
+print('Version|{}'.format(my_version))
+
+my_openapi = yaml_dict['openapi']
+print('OpenAPI|{}'.format(my_openapi))
