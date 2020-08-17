@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-List all of the API servers and deployments in Sumo Logic sumologic-api.yaml
+List all API servers and deployments within the Sumo Logic sumologic-api.yaml
 """
 
 import re

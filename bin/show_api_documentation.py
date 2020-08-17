@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Provides detailed Payload information from a Sumo Logic a sumologic-api.yaml
+Provides documentation of select areas of the Sumo Logic sumologic-api.yaml
 """
 
 import sys

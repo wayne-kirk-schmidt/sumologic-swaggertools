@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Provides detailed Payload information from a Sumo Logic a sumologic-api.yaml
+Provides Payload summary information for the Sumo Logic sumologic-api.yaml
 """
 
 import re
@@ -36,7 +36,7 @@ for keypath in benedict.keypaths(yaml_dict):
     if re.match(r"paths\..*?\.(get|put|delete|post)$", keypath):
         pruned_path = keypath.replace('paths.', '')
         endpoint, method = pruned_path.rsplit('.', 1)
-        payload = dict()
+        MY_PAYLOAD = dict()
         if MY_OBJECT in (endpoint, 'all'):
             if MY_ACTION in (method, 'all'):
                 if 'parameters' in yaml_dict[keypath]:
@@ -47,12 +47,13 @@ for keypath in benedict.keypaths(yaml_dict):
                         if 'required' in list_elem:
                             my_value = list_elem['required']
                             if str(my_value) == 'True':
-                               my_status = 'required'
+                                MY_STATUS = 'required'
                             else:
-                               my_status = 'optional'
-                        payload[my_key] = my_status
+                                MY_STATUS = 'optional'
+                        MY_PAYLOAD[my_key] = MY_STATUS
                 elif 'requestBody' in yaml_dict[keypath]:
-                    payload = yaml_dict[keypath]['requestBody']['content']['application/json']['schema']
+                    _my_payload = yaml_dict[keypath]['requestBody']
+                    MY_PAYLOAD = _my_payload['content']['application/json']['schema']
                 else:
-                    payload = 'no_payload_needed'
-                print('{},{},{}'.format(endpoint, method, payload))
+                    MY_PAYLOAD = 'no_payload_needed'
+                print('{},{},{}'.format(endpoint, method, MY_PAYLOAD))

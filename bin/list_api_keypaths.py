@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Shows the document structure for the Sumo Logic sumologic-api.yaml
+Provide high level document structure of the Sumo Logic sumologic-api.yaml
 """
 
 import pprint

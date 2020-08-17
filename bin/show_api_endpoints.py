@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Extracts all API endpoint paths in a sumologic-api.yaml
+Shows all API endpoint paths in the Sumo Logic sumologic-api.yaml
 """
 
 import re

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Extracts select payloads for API endpoints in a sumologic-api.yaml
+Shows payloads required for all API endpoints in the Sumo Logic sumologic-api.yaml
 """
 
 import re

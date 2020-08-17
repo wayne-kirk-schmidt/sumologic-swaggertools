@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-List API methods from the Sumo Logic sumologic-api.yaml
+Shows all API methods for each endpoint in the Sumo Logic sumologic-api.yaml
 """
 
 import re
