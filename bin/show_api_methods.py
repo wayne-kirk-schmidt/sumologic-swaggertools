@@ -39,4 +39,4 @@ for keypath in benedict.keypaths(yaml_dict):
         endpoint_dict[endpoint].append(method)
         if MY_OBJECT in (endpoint, 'all'):
             if MY_ACTION  in (method, 'all'):
-                print('{}|{}'.format(endpoint, method))
+                print('{},{}'.format(endpoint, method))

@@ -29,4 +29,4 @@ for keypath in benedict.keypaths(yaml_dict):
 
 for endpoint in endpoint_dict.keys():
     for method in endpoint_dict[endpoint]:
-        print('{},{}'.format(endpoint, method))
+        print('{}'.format(endpoint))
