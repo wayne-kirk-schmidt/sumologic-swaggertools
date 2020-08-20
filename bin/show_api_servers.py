@@ -25,4 +25,4 @@ for keypath in benedict.keypaths(yaml_dict):
             mydict = server_dict
             my_url = mydict['url'].replace("'", "")
             my_deployment = mydict['description'].split(" ")[0]
-            print('{}|{}'.format(my_deployment, my_url))
+            print('{},{}'.format(my_deployment, my_url))
