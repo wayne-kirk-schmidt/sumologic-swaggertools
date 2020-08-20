@@ -16,15 +16,19 @@ __author__ = "Wayne Schmidt (wschmidt@sumologic.com)"
 API_URL = 'https://api.sumologic.com/docs/sumologic-api.yaml'
 PP = pprint.PrettyPrinter(indent=4)
 
-yaml_stream = requests.get(API_URL).text
-yaml_dict = benedict.from_yaml(yaml_stream)
+if len(sys.argv) <= 1:
+    print('usage: show_api_payload.py <component_topic>')
+    sys.exit()
 
 MY_TOPIC = sys.argv[1]
+
+yaml_stream = requests.get(API_URL).text
+yaml_dict = benedict.from_yaml(yaml_stream)
 
 for keypath in benedict.keypaths(yaml_dict):
     if MY_TOPIC in keypath:
         path_base, path_end = keypath.rsplit('.', 1)
-        if path_end in ('required', '$ref', 'example'):
+        if path_end in ('required', '$ref'):
             print('Keypath:\t{}'.format(keypath))
             my_dict = yaml_dict[keypath]
             PP.pprint(my_dict)
