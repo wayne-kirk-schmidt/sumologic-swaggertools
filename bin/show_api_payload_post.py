@@ -12,7 +12,7 @@ __version__ = 1.00
 __author__ = "Wayne Schmidt (wschmidt@sumologic.com)"
 
 API_URL = 'https://api.sumologic.com/docs/sumologic-api.yaml'
-PP = pprint.PrettyPrinter(indent=4)
+PP = pprint.PrettyPrinter(indent=2,width=40,depth=4)
 
 yaml_stream = requests.get(API_URL).text
 yaml_dict = benedict.from_yaml(yaml_stream)
@@ -20,9 +20,10 @@ yaml_dict = benedict.from_yaml(yaml_stream)
 for keypath in benedict.keypaths(yaml_dict):
     if 'post.requestBody.content.application/json.schema.$ref' in keypath:
         if '{' not in keypath:
-            (_paths, endpoint, method) = keypath.split('.')[:3]
+            (_paths, endpoint, apimethod) = keypath.split('.')[:3]
             (_first, apiversion, objectname) = endpoint.split('/')[:3]
-            print('{} {} {} {}'.format(endpoint, method, apiversion, objectname))
+            print('API_ENDPOINT: {}'.format(endpoint))
+            print('API_DETAILS: {} {} {}'.format(objectname, apimethod, apiversion))
             keypayload = yaml_dict[keypath]
             keypayload = keypayload.replace('#/', '')
             keypayload = keypayload.replace('/', '.')
@@ -30,7 +31,6 @@ for keypath in benedict.keypaths(yaml_dict):
             my_payload['api.version'] = apiversion
             my_payload[objectname] = dict()
             if 'properties' in yaml_dict[keypayload]:
-                ### PP.pprint(yaml_dict[keypayload]['properties'])
                 for ATTRIBUTE in yaml_dict[keypayload]['properties']:
                     my_payload[objectname][ATTRIBUTE] = 'example_field'
                     for item in yaml_dict[keypayload]['properties'].items():
