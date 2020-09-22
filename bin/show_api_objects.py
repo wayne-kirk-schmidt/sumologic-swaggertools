@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Shows all API endpoint paths in the Sumo Logic sumologic-api.yaml
+Provide high level document structure of the Sumo Logic sumologic-api.yaml
 """
 
-import re
+import os
 import pprint
+import re
+import time
 from collections import defaultdict
 from benedict import benedict
 import requests
@@ -14,11 +16,29 @@ __version__ = 1.00
 __author__ = "Wayne Schmidt (wschmidt@sumologic.com)"
 
 API_URL = 'https://api.sumologic.com/docs/sumologic-api.yaml'
-PP = pprint.PrettyPrinter(indent=4)
+API_FILE = '/var/tmp/sumologic-api.yaml'
+PP = pprint.PrettyPrinter(indent=2, width=40, depth=4)
 
-yaml_stream = requests.get(API_URL).text
-yaml_dict = benedict.from_yaml(yaml_stream)
+SEC2MIN = 60
+MIN2HOURS = 60
+NUM_HOURS = 4
 
+TIME_LIMIT = SEC2MIN * MIN2HOURS * NUM_HOURS
+
+if os.path.exists(API_FILE):
+    stat_time = os.path.getctime(API_FILE)
+    time_now = time.time()
+    time_delta = (time_now - stat_time)
+    if int(time_delta) > TIME_LIMIT:
+        yaml_stream = requests.get(API_URL).text
+        with open(API_FILE, 'w') as file_object:
+            file_object.write(yaml_stream)
+else:
+    yaml_stream = requests.get(API_URL).text
+    with open(API_FILE, 'w') as file_object:
+        file_object.write(yaml_stream)
+
+yaml_dict = benedict.from_yaml(API_FILE)
 endpoint_dict = defaultdict(list)
 
 for keypath in benedict.keypaths(yaml_dict):
