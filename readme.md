@@ -58,15 +58,9 @@ In short, this makes all of the tools the equivalent of an itelligent cat and gr
 To Do List:
 ===========
 
-* Cache the sumologic-api.yaml file if requested
-
 * Specify the location to get the api file from
 
 * Provide a meams to checksum the files
-
-* Resolve the ref sections
-
-* build a sample payload generator for put and update methods
 
 License
 =======
