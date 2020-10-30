@@ -37,6 +37,8 @@ Dependencies
 
 See the contents of "pipfile"
 
+NOTE: please use python-benedict instead of benedict please
+
 Script Names and Purposes
 =========================
 

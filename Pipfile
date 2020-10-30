@@ -8,5 +8,6 @@ pyinstaller = "*"
 
 [packages]
 benedict = "*"
+python-benedict = "*"
 requests = "*"
 bs4 = "*"
