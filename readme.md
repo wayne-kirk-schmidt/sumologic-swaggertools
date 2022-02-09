@@ -6,8 +6,8 @@ The Swagger tools are helper functions to mine specific information from the Sum
 Installing the Scripts
 =======================
 
-The scripts are command line based, designed to be used within a batch script or DevOPs tool such as Chef or Ansible.
-Each script is a python3 script, and the complete list of the python modules will be provided to aid people using a pip install.
+These scripts command line based, designed to be used within a batch script or DevOPs tool such as Chef or Ansible.
+Each is a python3 script, and the list of the python modules will be provided to aid people using a pip install.
 
 You will need to use Python 3.6 or higher and the modules listed in the dependency section.  
 
@@ -53,24 +53,19 @@ Instead, this uses the requests module to retrieve the API definition into memor
 
 In short, this makes all of the tools the equivalent of an itelligent cat and grep.
 
-To Do List:
-===========
-
-* Specify the location to get the api file from
-
-* Provide a meams to checksum the files
-
 License
 =======
 
-Copyright 2020 Wayne Kirk Schmidt
+Copyright 2020-2022 Wayne Kirk Schmidt
+https://www.linkedin.com/in/waynekirkschmidt
 
-Licensed under the GNU GPL License (the "License");
-you may not use this file except in compliance with the License.
+Licensed under the Apache 2.0 License (the "License");
+
+You may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    license-name   GNU GPL
-    license-url    http://www.gnu.org/licenses/gpl.html
+    license-name   APACHE 2.0
+    license-url    http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -83,4 +78,3 @@ Support
 
 Feel free to e-mail me with issues to: wschmidt@sumologic.com
 I will provide "best effort" fixes and extend the scripts.
-

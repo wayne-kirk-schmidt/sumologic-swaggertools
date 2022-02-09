@@ -5,24 +5,20 @@ Provide high level document structure of the Sumo Logic sumologic-api.yaml
 """
 
 import os
-import pprint
-import time
 import re
+import sys
+import time
+import yaml
+import ruamel.yaml
 import requests
-from benedict import benedict
 
 __version__ = 1.00
 __author__ = "Wayne Schmidt (wschmidt@sumologic.com)"
 
 API_URL = 'https://api.sumologic.com/docs/sumologic-api.yaml'
 API_FILE = '/var/tmp/sumologic-api.yaml'
-PP = pprint.PrettyPrinter(indent=2, width=40, depth=4)
 
-SEC2MIN = 60
-MIN2HOURS = 60
-NUM_HOURS = 4
-
-TIME_LIMIT = SEC2MIN * MIN2HOURS * NUM_HOURS
+TIME_LIMIT = 4 * 60 * 60
 
 if os.path.exists(API_FILE):
     stat_time = os.path.getctime(API_FILE)
@@ -37,12 +33,37 @@ else:
     with open(API_FILE, 'w') as file_object:
         file_object.write(yaml_stream)
 
-yaml_dict = benedict.from_yaml(API_FILE)
+def pathify(dictionary, mypath=None, paths=None, joinchar='.'):
+    """
+    Recursively parse paths in the YAML file and join them with a common separator
+    """
+    if mypath is None:
+        paths = {}
+        pathify(dictionary, "", paths, joinchar=joinchar)
+        return paths
+    pathname = mypath
+    if mypath != "":
+        pathname += '.'
+    if isinstance(dictionary, dict):
+        for key in dictionary:
+            value = dictionary[key]
+            pathify(value, pathname + key, paths, joinchar=joinchar)
+    elif isinstance(dictionary, list):
+        for index, entry in enumerate(dictionary):
+            pathify(entry, pathname + str(index), paths, joinchar=joinchar)
+    else:
+        paths[mypath] = dictionary
+    return paths
 
-for keypath in benedict.keypaths(yaml_dict):
-    if re.match(r"servers$", keypath):
-        for server_dict in yaml_dict[keypath]:
-            mydict = server_dict
-            my_url = mydict['url'].replace("'", "")
-            my_deployment = mydict['description'].split(" ")[0]
-            print('{},{}'.format(my_deployment, my_url))
+yaml = ruamel.yaml.YAML(typ='safe')
+
+with open(API_FILE, "r") as yaml_stream:
+    pathsdict = pathify(yaml.load(yaml_stream))
+
+for path_key, path_value in pathsdict.items():
+    if re.match(r"servers.*.url", path_key):
+       sys.stdout.write('{},'.format(path_value))
+    if re.match(r"servers.*.description", path_key):
+       print('{}'.format(path_value))
+
+        

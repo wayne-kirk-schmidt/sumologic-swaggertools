@@ -5,23 +5,19 @@ Provide high level document structure of the Sumo Logic sumologic-api.yaml
 """
 
 import os
-import pprint
+import re
 import time
+import yaml
+import ruamel.yaml
 import requests
-from benedict import benedict
 
 __version__ = 1.00
 __author__ = "Wayne Schmidt (wschmidt@sumologic.com)"
 
 API_URL = 'https://api.sumologic.com/docs/sumologic-api.yaml'
 API_FILE = '/var/tmp/sumologic-api.yaml'
-PP = pprint.PrettyPrinter(indent=2, width=40, depth=4)
 
-SEC2MIN = 60
-MIN2HOURS = 60
-NUM_HOURS = 4
-
-TIME_LIMIT = SEC2MIN * MIN2HOURS * NUM_HOURS
+TIME_LIMIT = 4 * 60 * 60
 
 if os.path.exists(API_FILE):
     stat_time = os.path.getctime(API_FILE)
@@ -36,13 +32,34 @@ else:
     with open(API_FILE, 'w') as file_object:
         file_object.write(yaml_stream)
 
-yaml_dict = benedict.from_yaml(API_FILE)
+def pathify(dictionary, mypath=None, paths=None, joinchar='.'):
+    """
+    Recursively parse paths in the YAML file and join them with a common separator
+    """
+    if mypath is None:
+        paths = {}
+        pathify(dictionary, "", paths, joinchar=joinchar)
+        return paths
+    pathname = mypath
+    if mypath != "":
+        pathname += '.'
+    if isinstance(dictionary, dict):
+        for key in dictionary:
+            value = dictionary[key]
+            pathify(value, pathname + key, paths, joinchar=joinchar)
+    elif isinstance(dictionary, list):
+        for index, entry in enumerate(dictionary):
+            pathify(entry, pathname + str(index), paths, joinchar=joinchar)
+    else:
+        paths[mypath] = dictionary
+    return paths
 
-my_title = yaml_dict['info.title']
-print('APIName,{}'.format(my_title))
+yaml = ruamel.yaml.YAML(typ='safe')
 
-my_version = yaml_dict['info.version']
-print('Version,{}'.format(my_version))
+with open(API_FILE, "r") as yaml_stream:
+    pathsdict = pathify(yaml.load(yaml_stream))
 
-my_openapi = yaml_dict['openapi']
-print('OpenAPI,{}'.format(my_openapi))
+for path_key, path_value in pathsdict.items():
+    if re.match(r"info.version", path_key):
+        path_key = path_key.replace("info.","")
+        print('{},{}'.format(path_key, path_value))
