@@ -56,7 +56,7 @@ In short, this makes all of the tools the equivalent of an itelligent cat and gr
 License
 =======
 
-Copyright 2020-2022 Wayne Kirk Schmidt
+Copyright 2020 Wayne Kirk Schmidt
 https://www.linkedin.com/in/waynekirkschmidt
 
 Licensed under the Apache 2.0 License (the "License");
@@ -76,5 +76,10 @@ limitations under the License.
 Support
 =======
 
-Feel free to e-mail me with issues to: wschmidt@sumologic.com
+Feel free to e-mail me with issues to: 
+
++    wschmidt@sumologic.com
+
++    wayne.kirk.schmidt@gmail.com
+
 I will provide "best effort" fixes and extend the scripts.
