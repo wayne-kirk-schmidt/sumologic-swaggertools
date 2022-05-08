@@ -25,11 +25,11 @@ if os.path.exists(API_FILE):
     time_delta = (time_now - stat_time)
     if int(time_delta) > TIME_LIMIT:
         yaml_stream = requests.get(API_URL).text
-        with open(API_FILE, 'w') as file_object:
+        with open(API_FILE, 'w', encoding='utf8') as file_object:
             file_object.write(yaml_stream)
 else:
     yaml_stream = requests.get(API_URL).text
-    with open(API_FILE, 'w') as file_object:
+    with open(API_FILE, 'w', encoding='utf8') as file_object:
         file_object.write(yaml_stream)
 
 def pathify(dictionary, mypath=None, paths=None, joinchar='.'):
@@ -56,7 +56,7 @@ def pathify(dictionary, mypath=None, paths=None, joinchar='.'):
 
 yaml = ruamel.yaml.YAML(typ='safe')
 
-with open(API_FILE, "r") as yaml_stream:
+with open(API_FILE, "r", encoding='utf8') as yaml_stream:
     pathsdict = pathify(yaml.load(yaml_stream))
 
 for path_key, path_value in pathsdict.items():
@@ -64,4 +64,4 @@ for path_key, path_value in pathsdict.items():
         path_key = path_key.replace("paths.","")
         path_key = path_key.replace(".tags.0","")
         apipath, method = path_key.split(".")
-        print('{},{},{}'.format(path_value, apipath, method))
+        print(f'{path_value},{apipath},{method}')
