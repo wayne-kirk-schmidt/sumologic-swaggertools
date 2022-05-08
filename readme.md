@@ -3,6 +3,22 @@ Sumo Logic Swagger Tools
 
 The Swagger tools are helper functions to mine specific information from the Sumo Logic API file.
 
+Business Case
+=============
+
+Curious what was the business goals we wanted to solve? 
+
+Please read on in our [writeup](doc/writeup.md)!
+
+Examples
+========
+
+![example1](doc/swaggertools1.png)
+
+![example2](doc/swaggertools2.png)
+
+![example3](doc/swaggertools3.png)
+
 Installing the Scripts
 =======================
 
