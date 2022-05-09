@@ -1,7 +1,7 @@
 Sumo Logic Swagger Tools
 ========================
 
-The Swagger tools are helper functions to mine specific information from the Sumo Logic API file.
+These tools enable people to explore the Sumo Logic API yaml file, using Unix tools in a "grep friendly manner".
 
 Business Case
 =============
